@@ -43,5 +43,6 @@ export const FEATURE_FLAGS = {
   // This features requires a landing page, same root host to be running simultaneously.
   // While this can be expected in staging and in production we SHOULD not expect every developper
   // to run both projects while working. Deactivate feature in dev by default.
-  MIGRATE_LS: !IS_DEV
+  MIGRATE_LS: !IS_DEV,
+  FAUCET: IS_DEV
 };

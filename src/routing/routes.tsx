@@ -98,6 +98,7 @@ const AaveTokenMigration = lazy(() =>
 const AntTokenMigration = lazy(() =>
   import(/* webpackChunkName: "TokenMigration" */ '@features/AntTokenMigration')
 );
+const Faucet = lazy(() => import(/* webpackChunkName: "Faucet" */ '@features/Faucet/Faucet'));
 
 export interface IAppRoutes {
   [K: string]: IAppRoute;
@@ -346,6 +347,15 @@ export const getStaticAppRoutes = (featureFlags: IFeatureFlags): IAppRoute[] => 
     requireAccounts: true,
     enabled: isTruthy(featureFlags.ANT_TOKEN_MIGRATION),
     component: AntTokenMigration
+  },
+  {
+    name: ROUTE_PATHS.FAUCET.name,
+    title: ROUTE_PATHS.FAUCET.title,
+    path: ROUTE_PATHS.FAUCET.path,
+    exact: true,
+    requireAccounts: true,
+    enabled: isTruthy(featureFlags.FAUCET),
+    component: Faucet
   }
 ];
 
