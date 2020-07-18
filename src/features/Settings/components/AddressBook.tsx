@@ -16,6 +16,7 @@ import {
   UndoDeleteOverlay
 } from '@components';
 import IconArrow from '@components/IconArrow';
+import { useNetworks } from '@services';
 import { BREAK_POINTS, COLORS, SPACING } from '@theme';
 import { translateRaw } from '@translations';
 import { ExtendedContact, Contact as IContact, TUuid } from '@types';
@@ -124,6 +125,7 @@ export default function AddressBook({
   updateContact,
   restoreDeletedContact
 }: Props) {
+  const { getNetworkById } = useNetworks();
   const [sortingState, setSortingState] = useState(initialSortingState);
   const [deletingIndex, setDeletingIndex] = useState<number>();
   const [undoDeletingIndexes, setUndoDeletingIndexes] = useState<[number, TUuid][]>([]);
@@ -231,28 +233,35 @@ export default function AddressBook({
     },
     overlayRows: overlayRowsFlat,
     body: displayAddressBook.map(
-      ({ uuid, address, label, network, notes }: ExtendedContact, index) => [
-        <Icon key={0} icon="star" />,
-        <Label key={1}>
-          <SIdenticon address={address} />
-          <SEditableText
+      ({ uuid, address, label, network, notes }: ExtendedContact, index) => {
+        const networkData = getNetworkById(network);
+        const color =
+          networkData && 'color' in networkData && networkData.color
+            ? networkData.color
+            : '#a682ff';
+        return [
+          <Icon key={0} icon="star" />,
+          <Label key={1}>
+            <SIdenticon address={address} />
+            <SEditableText
+              truncate={true}
+              value={label}
+              saveValue={(value) => updateContact(uuid, { address, label: value, network, notes })}
+            />
+          </Label>,
+          <EthAddress key={2} address={address} truncate={true} isCopyable={true} />,
+          <Network key={3} color={color}>
+            {network}
+          </Network>,
+          <EditableText
+            key={4}
             truncate={true}
-            value={label}
-            saveValue={(value) => updateContact(uuid, { address, label: value, network, notes })}
-          />
-        </Label>,
-        <EthAddress key={2} address={address} truncate={true} isCopyable={true} />,
-        <Network key={3} color="#a682ff">
-          {network}
-        </Network>,
-        <EditableText
-          key={4}
-          truncate={true}
-          value={notes}
-          saveValue={(value) => updateContact(uuid, { address, label, network, notes: value })}
-        />,
-        <DeleteButton key={5} onClick={() => setDeletingIndex(index)} icon="exit" />
-      ]
+            value={notes}
+            saveValue={(value) => updateContact(uuid, { address, label, network, notes: value })}
+          />,
+          <DeleteButton key={5} onClick={() => setDeletingIndex(index)} icon="exit" />
+        ];
+      }
     ),
     config: {
       primaryColumn: translateRaw('ADDRESSBOOK_LABEL'),
