@@ -11,6 +11,7 @@ import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
 import zapperLogo from '@assets/images/defizap/zapperLogo.svg';
+import receiveIcon from '@assets/images/icn-receive.svg';
 import sentIcon from '@assets/images/icn-sent.svg';
 import {
   Amount,
@@ -22,7 +23,7 @@ import {
   TimeElapsed,
   Tooltip
 } from '@components';
-import { getWalletConfig, ROUTE_PATHS } from '@config';
+import { FAUCET_ADDRESS, getWalletConfig, ROUTE_PATHS } from '@config';
 import { getFiat } from '@config/fiats';
 import ProtocolTagsList from '@features/DeFiZap/components/ProtocolTagsList';
 import { ProtectTxAbort } from '@features/ProtectTransaction/components/ProtectTxAbort';
@@ -372,7 +373,7 @@ export const TxReceiptUI = ({
           <MembershipReceiptBanner membershipSelected={membershipSelected} />
         </div>
       )}
-      {txType !== ITxType.PURCHASE_MEMBERSHIP && (
+      {txType !== ITxType.PURCHASE_MEMBERSHIP && txType !== ITxType.FAUCET && (
         <>
           <FromToAccount
             networkId={sender.network.id}
@@ -385,6 +386,20 @@ export const TxReceiptUI = ({
               addressBookEntry: recipientContact
             }}
             displayToAddress={txType !== ITxType.DEPLOY_CONTRACT}
+          />
+        </>
+      )}
+      {txType === ITxType.FAUCET && (
+        <>
+          <FromToAccount
+            from={{
+              address: FAUCET_ADDRESS as TAddress,
+              label: 'MyCrypto Faucet'
+            }}
+            to={{
+              address: (receiverAddress || (displayTxReceipt && displayTxReceipt.to)) as TAddress,
+              label: recipientLabel
+            }}
           />
         </>
       )}
@@ -424,8 +439,17 @@ export const TxReceiptUI = ({
       {txType !== ITxType.SWAP && txType !== ITxType.FAUCET && (
         <div className="TransactionReceipt-row">
           <div className="TransactionReceipt-row-column">
-            <img src={sentIcon} alt="Sent" />
-            {translate('CONFIRM_TX_SENT')}
+            {txType === ITxType.FAUCET ? (
+              <>
+                <img src={receiveIcon} alt="Received" />
+                {translate('CONFIRM_TX_RECEIVED')}
+              </>
+            ) : (
+              <>
+                <img src={sentIcon} alt="Sent" />
+                {translate('CONFIRM_TX_SENT')}
+              </>
+            )}
           </div>
           <div className="TransactionReceipt-row-column rightAligned">
             <AssetIcon uuid={asset.uuid} size={'24px'} />
