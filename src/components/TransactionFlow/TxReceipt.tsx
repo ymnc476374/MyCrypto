@@ -11,7 +11,6 @@ import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
 import zapperLogo from '@assets/images/defizap/zapperLogo.svg';
-import receiveIcon from '@assets/images/icn-receive.svg';
 import sentIcon from '@assets/images/icn-sent.svg';
 import {
   Amount,
@@ -23,7 +22,7 @@ import {
   TimeElapsed,
   Tooltip
 } from '@components';
-import { FAUCET_ADDRESS, getWalletConfig, ROUTE_PATHS } from '@config';
+import { getWalletConfig, ROUTE_PATHS } from '@config';
 import { getFiat } from '@config/fiats';
 import ProtocolTagsList from '@features/DeFiZap/components/ProtocolTagsList';
 import { ProtectTxAbort } from '@features/ProtectTransaction/components/ProtectTxAbort';
@@ -59,7 +58,12 @@ import { constructCancelTxQuery, constructSpeedUpTxQuery } from '@utils/queries'
 import { makeFinishedTxReceipt } from '@utils/transaction';
 import { path } from '@vendor';
 
-import { FromToAccount, SwapFromToDiagram, TransactionDetailsDisplay } from './displays';
+import {
+  FromToAccount,
+  RecipientAccount,
+  SwapFromToDiagram,
+  TransactionDetailsDisplay
+} from './displays';
 import TxIntermediaryDisplay from './displays/TxIntermediaryDisplay';
 import { calculateReplacementGasPrice, constructSenderFromTxConfig } from './helpers';
 import { PendingTransaction } from './PendingLoader';
@@ -347,7 +351,9 @@ export const TxReceiptUI = ({
         <div className="TransactionReceipt-row">
           <div className="TransactionReceipt-row-desc">
             {protectTxEnabled && !web3Wallet && <SSpacer />}
-            {translate('TRANSACTION_BROADCASTED_DESC')}
+            {txType === ITxType.FAUCET
+              ? translate('FAUCET_SUCCESS')
+              : translate('TRANSACTION_BROADCASTED_DESC')}
           </div>
         </div>
       )}
@@ -391,11 +397,7 @@ export const TxReceiptUI = ({
       )}
       {txType === ITxType.FAUCET && (
         <>
-          <FromToAccount
-            from={{
-              address: FAUCET_ADDRESS as TAddress,
-              label: 'MyCrypto Faucet'
-            }}
+          <RecipientAccount
             to={{
               address: (receiverAddress || (displayTxReceipt && displayTxReceipt.to)) as TAddress,
               label: recipientLabel
@@ -439,17 +441,8 @@ export const TxReceiptUI = ({
       {txType !== ITxType.SWAP && txType !== ITxType.FAUCET && (
         <div className="TransactionReceipt-row">
           <div className="TransactionReceipt-row-column">
-            {txType === ITxType.FAUCET ? (
-              <>
-                <img src={receiveIcon} alt="Received" />
-                {translate('CONFIRM_TX_RECEIVED')}
-              </>
-            ) : (
-              <>
-                <img src={sentIcon} alt="Sent" />
-                {translate('CONFIRM_TX_SENT')}
-              </>
-            )}
+            <img src={sentIcon} alt="Sent" />
+            {translate('CONFIRM_TX_SENT')}
           </div>
           <div className="TransactionReceipt-row-column rightAligned">
             <AssetIcon uuid={asset.uuid} size={'24px'} />
