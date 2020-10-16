@@ -3,12 +3,11 @@ import React, { FC, useCallback, useState } from 'react';
 import { InlineMessage, NewTabLink } from '@components';
 import { IWalletConfig, WALLETS_CONFIG } from '@config';
 import { FormDataActionType as ActionType } from '@features/AddAccount/types';
-import { ANALYTICS_CATEGORIES } from '@services';
 import { NetworkUtils, useNetworks, useSettings } from '@services/Store';
 import { WalletFactory, Web3Wallet } from '@services/WalletService';
 import translate, { translateRaw } from '@translations';
 import { FormData, Network, WalletId } from '@types';
-import { hasWeb3Provider, useAnalytics, useScreenSize } from '@utils';
+import { hasWeb3Provider, useScreenSize } from '@utils';
 import { getWeb3Config } from '@utils/web3';
 
 import './Web3Provider.scss';
@@ -31,9 +30,6 @@ const Web3ProviderDecrypt: FC<Props> = ({ formData, formDispatch, onUnlock }) =>
   const { isMobile } = useScreenSize();
   const { updateSettingsNode } = useSettings();
   const { addNodeToNetwork, networks } = useNetworks();
-  const trackSelectNetwork = useAnalytics({
-    category: ANALYTICS_CATEGORIES.ADD_WEB3_ACCOUNT
-  });
   const [web3ProviderSettings] = useState<IWalletConfig>(() => {
     if (hasWeb3Provider()) {
       return getWeb3Config();
@@ -61,10 +57,6 @@ const Web3ProviderDecrypt: FC<Props> = ({ formData, formDispatch, onUnlock }) =>
       }
       // If accountType is defined, we are in the AddAccountFlow
       if (formData.accountType) {
-        trackSelectNetwork({
-          actionName: `${web3ProviderSettings.name} added`
-        });
-
         const network = walletPayload[0].network;
         formDispatch({
           type: ActionType.SELECT_NETWORK,

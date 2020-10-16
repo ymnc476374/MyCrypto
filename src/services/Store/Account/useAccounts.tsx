@@ -8,22 +8,19 @@ import isEmpty from 'ramda/src/isEmpty';
 import prop from 'ramda/src/prop';
 import unionWith from 'ramda/src/unionWith';
 
-import { ANALYTICS_CATEGORIES } from '@services/ApiService/Analytics';
 import {
   Asset,
   AssetBalanceObject,
   IAccount,
   IRawAccount,
   ITxReceipt,
-  ITxStatus,
-  ITxType,
   LSKeys,
   NetworkId,
   StoreAccount,
   TAddress,
   TUuid
 } from '@types';
-import { isSameAddress, useAnalytics } from '@utils';
+import { isSameAddress } from '@utils';
 
 import { getAllTokensBalancesOfAccount } from '../BalanceService';
 import { DataContext } from '../DataManager';
@@ -48,10 +45,6 @@ function useAccounts() {
   const { createActions, accounts } = useContext(DataContext);
   const { addAccountToFavorites, addMultipleAccountsToFavorites } = useSettings();
   const model = createActions(LSKeys.ACCOUNTS);
-  const trackTxHistory = useAnalytics({
-    category: ANALYTICS_CATEGORIES.TX_HISTORY,
-    actionName: 'Tx Made'
-  });
 
   const createAccountWithID = (uuid: TUuid, item: IRawAccount) => {
     addAccountToFavorites(uuid);
@@ -69,14 +62,6 @@ function useAccounts() {
   const updateAccount = (uuid: TUuid, account: IAccount) => model.update(uuid, account);
 
   const addTxToAccount = (accountData: IAccount, newTx: ITxReceipt) => {
-    if ('status' in newTx && [ITxStatus.SUCCESS, ITxStatus.FAILED].includes(newTx.status)) {
-      trackTxHistory({
-        eventParams: {
-          txType: (newTx && newTx.txType) || ITxType.UNKNOWN,
-          txStatus: newTx.status
-        }
-      });
-    }
     const newAccountData = {
       ...accountData,
       transactions: [...accountData.transactions.filter((tx) => tx.hash !== newTx.hash), newTx]

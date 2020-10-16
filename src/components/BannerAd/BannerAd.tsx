@@ -3,9 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { ANALYTICS_CATEGORIES } from '@services';
 import { BREAK_POINTS } from '@theme';
-import { useAnalytics } from '@utils';
 
 import { ads } from './constants';
 
@@ -38,12 +36,9 @@ export default function BannerAd() {
   const randomIndex = Math.floor(Math.random() * ads.length);
   const ad = ads[randomIndex];
   const isExternalLink = ad.url.startsWith('http');
-  const trackAdd = useAnalytics({
-    category: ANALYTICS_CATEGORIES.AD
-  });
 
   return (
-    <AdWrapper onClick={() => trackAdd({ actionName: `${ad.name} ad clicked` })}>
+    <AdWrapper>
       {isExternalLink ? (
         <a href={ad.url} target="_blank" rel="noreferrer">
           <BannerImageDesktop src={ad.srcDesktop} />

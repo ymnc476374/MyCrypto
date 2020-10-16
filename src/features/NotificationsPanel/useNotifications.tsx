@@ -1,9 +1,8 @@
 import { useContext } from 'react';
 
-import { ANALYTICS_CATEGORIES } from '@services';
 import { DataContext } from '@services/Store';
 import { ExtendedNotification, LSKeys } from '@types';
-import { generateUUID, getTimeDifference, notUndefined, useAnalytics } from '@utils';
+import { generateUUID, getTimeDifference, notUndefined } from '@utils';
 
 import { notificationsConfigs } from './constants';
 
@@ -48,9 +47,6 @@ export function useNotifications() {
   const { notifications, createActions } = useContext(DataContext);
   const currentNotification = getCurrent(notifications);
   const Notification = createActions(LSKeys.NOTIFICATIONS);
-  const trackNotificationDisplayed = useAnalytics({
-    category: ANALYTICS_CATEGORIES.NOTIFICATION
-  });
 
   const displayNotification = (templateName: string, templateData?: TObject) => {
     // Dismiss previous notifications that need to be dismissed
@@ -105,12 +101,6 @@ export function useNotifications() {
 
   const trackNotificationViewed = () => {
     if (currentNotification) {
-      trackNotificationDisplayed({
-        actionName: `${
-          notificationsConfigs[currentNotification.template].analyticsEvent
-        } notification displayed`
-      });
-
       // Hide notifications that should be shown only once and update notifications that should be displayed again
       notifications.forEach((n) => {
         const config = notificationsConfigs[n.template];

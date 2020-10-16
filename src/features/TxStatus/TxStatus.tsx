@@ -8,16 +8,10 @@ import styled from 'styled-components';
 
 import { Button, ContentPanel, InlineMessage, NetworkSelector, TxReceipt } from '@components';
 import { DEFAULT_NETWORK, ROUTE_PATHS } from '@config';
-import {
-  ANALYTICS_CATEGORIES,
-  StoreContext,
-  useAssets,
-  useNetworks,
-  useTxHistory
-} from '@services';
+import { StoreContext, useAssets, useNetworks, useTxHistory } from '@services';
 import { translateRaw } from '@translations';
 import { NetworkId } from '@types';
-import { isVoid, noOp, useAnalytics } from '@utils';
+import { isVoid, noOp } from '@utils';
 import { useEffectOnce, useUpdateEffect } from '@vendor';
 
 import { fetchTxStatus, makeTx } from './helpers';
@@ -51,10 +45,6 @@ const Wrapper = styled.div<{ fullPageLoading: boolean }>`
 const TxStatus = ({ history, location }: RouteComponentProps) => {
   const qs = queryString.parse(location.search);
 
-  const trackPageLoad = useAnalytics({
-    category: ANALYTICS_CATEGORIES.TX_STATUS
-  });
-
   const { assets } = useAssets();
   const { networks } = useNetworks();
   const { accounts } = useContext(StoreContext);
@@ -73,13 +63,6 @@ const TxStatus = ({ history, location }: RouteComponentProps) => {
   useEffectOnce(() => {
     if (!isVoid(defaultTxHash)) {
       handleSubmit(true);
-      trackPageLoad({
-        actionName: `Used link sharing`
-      });
-    } else {
-      trackPageLoad({
-        actionName: `Didnt use link sharing`
-      });
     }
   });
 

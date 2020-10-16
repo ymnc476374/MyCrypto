@@ -6,9 +6,7 @@ import styled from 'styled-components';
 
 import mainImage from '@assets/images/icn-unlock-wallet.svg';
 import { ExtendedContentPanel, InputField } from '@components';
-import { ANALYTICS_CATEGORIES } from '@services';
 import translate, { translateRaw } from '@translations';
-import { useAnalytics } from '@utils';
 
 import { ScreenLockContext } from './ScreenLockProvider';
 
@@ -50,10 +48,6 @@ const ScreenLockLocked: FC<RouteComponentProps> = () => {
   }>({
     password: '',
     passwordError: ''
-  });
-  const trackScreenLock = useAnalytics({
-    category: ANALYTICS_CATEGORIES.SCREEN_LOCK,
-    actionName: 'Why do we recommend link clicked'
   });
 
   const onPasswordChanged = useCallback(
@@ -108,9 +102,7 @@ const ScreenLockLocked: FC<RouteComponentProps> = () => {
               </div>
               <div>
                 {translate('SCREEN_LOCK_LOCKED_RECOMMEND_LOCK')}{' '}
-                <Link onClick={() => trackScreenLock()} to="/dashboard">
-                  {translate('SCREEN_LOCK_LOCKED_LEARN_MORE')}
-                </Link>
+                <Link to="/dashboard">{translate('SCREEN_LOCK_LOCKED_LEARN_MORE')}</Link>
               </div>
             </BottomActions>
           </ContentWrapper>

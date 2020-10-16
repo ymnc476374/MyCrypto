@@ -4,12 +4,10 @@ import { Button } from '@mycrypto/ui';
 import styled from 'styled-components';
 
 import { NetworkSelector } from '@components';
-import { ANALYTICS_CATEGORIES } from '@services';
 import { useNetworks } from '@services/Store';
 import { SPACING } from '@theme';
 import translate from '@translations';
 import { FormData, NetworkId } from '@types';
-import { useAnalytics } from '@utils';
 
 import { FormDataActionType as ActionType } from '../types';
 
@@ -40,17 +38,11 @@ interface Props {
 function NetworkSelectPanel({ formData, formDispatch, goToNextStep }: Props) {
   const { networks } = useNetworks();
   const [network, setNetwork] = useState<NetworkId>(formData.network);
-  const trackSelectNetwork = useAnalytics({
-    category: ANALYTICS_CATEGORIES.SELECT_NETWORK
-  });
 
   const onSubmit = () => {
     formDispatch({
       type: ActionType.SELECT_NETWORK,
       payload: { network }
-    });
-    trackSelectNetwork({
-      actionName: network
     });
     goToNextStep();
   };

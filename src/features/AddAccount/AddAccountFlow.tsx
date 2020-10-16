@@ -5,10 +5,9 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import { ExtendedContentPanel, WalletList } from '@components';
 import { IWalletConfig, ROUTE_PATHS, WALLETS_CONFIG } from '@config';
-import { ANALYTICS_CATEGORIES } from '@services/ApiService';
 import { StoreContext } from '@services/Store';
 import { IStory, StoreAccount, WalletId } from '@types';
-import { isSameAddress, useAnalytics } from '@utils';
+import { isSameAddress } from '@utils';
 import { useUpdateEffect } from '@vendor';
 
 import { NotificationTemplates, useNotifications } from '../NotificationsPanel';
@@ -51,10 +50,6 @@ const AddAccountFlow = withRouter(({ history, match }) => {
     accounts
   } = useContext(StoreContext);
   const { displayNotification } = useNotifications();
-  const trackNewAccountAdded = useAnalytics({
-    category: ANALYTICS_CATEGORIES.ADD_ACCOUNT,
-    actionName: 'New Account Added'
-  });
 
   const storyName: WalletId = formData.accountType; // The Wallet Story that we are tracking.
   const isDefaultView = storyName === undefined;
@@ -78,14 +73,6 @@ const AddAccountFlow = withRouter(({ history, match }) => {
         const newAccount = accounts.find(
           (account) => isSameAddress(account.address, address) && account.networkId === network
         );
-        if (newAccount) {
-          trackNewAccountAdded({
-            eventParams: {
-              newAccountAddedType: newAccount.wallet,
-              newAccountAddedNumOfAccounts: accounts.length
-            }
-          });
-        }
         return newAccount;
       })
       .filter((a) => a !== undefined) as StoreAccount[];

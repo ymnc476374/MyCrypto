@@ -51,14 +51,13 @@ import {
   isSameAddress,
   multiplyBNFloats,
   sortByLabel,
-  useAnalytics,
   useInterval,
   weiToFloat
 } from '@utils';
 import { makeFinishedTxReceipt } from '@utils/transaction';
 import { isEmpty as isVoid, useEffectOnce } from '@vendor';
 
-import { ANALYTICS_CATEGORIES, MyCryptoApiService, UniswapService } from '../ApiService';
+import { MyCryptoApiService, UniswapService } from '../ApiService';
 import { getDashboardAccounts, useAccounts } from './Account';
 import {
   getAssetByTicker,
@@ -262,15 +261,6 @@ export const StoreProvider: React.FC = ({ children }) => {
         );
       });
   };
-
-  useAnalytics({
-    category: ANALYTICS_CATEGORIES.ROOT,
-    actionName: accounts.length === 0 ? 'New User' : 'Returning User',
-    eventParams: {
-      visitStartAccountNumber: accounts.length
-    },
-    triggerOnMount: true
-  });
 
   useEffectOnce(() => {
     scanForMemberships();

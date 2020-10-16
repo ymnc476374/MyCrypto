@@ -6,11 +6,9 @@ import styled from 'styled-components';
 
 import { DashboardPanel, SubHeading, Tooltip } from '@components';
 import { Fiats, ROUTE_PATHS } from '@config';
-import { ANALYTICS_CATEGORIES } from '@services';
 import { BREAK_POINTS, COLORS, SPACING } from '@theme';
 import translate, { translateRaw } from '@translations';
 import { ISettings, TFiatTicker } from '@types';
-import { useAnalytics } from '@utils';
 
 const Divider = styled.div`
   height: 2px;
@@ -74,23 +72,12 @@ const timerOptions = [
 ];
 
 const GeneralSettings: FC<SettingsProps> = ({ globalSettings, updateGlobalSettings }) => {
-  const trackSetInacticityTimer = useAnalytics({
-    category: ANALYTICS_CATEGORIES.SETTINGS
-  });
-
   const changeTimer = useCallback(
     (event: React.FormEvent<HTMLSelectElement>) => {
       const target = event.target as HTMLSelectElement;
       updateGlobalSettings({ ...globalSettings, inactivityTimer: Number(target.value) });
-
-      const selectedTimer = timerOptions.find((selection) => selection.value === target.value);
-      if (selectedTimer) {
-        trackSetInacticityTimer({
-          actionName: `User set inactivity timer to ${selectedTimer.name}`
-        });
-      }
     },
-    [trackSetInacticityTimer, globalSettings, updateGlobalSettings]
+    [globalSettings, updateGlobalSettings]
   );
 
   const changeCurrencySelection = useCallback(

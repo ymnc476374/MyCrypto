@@ -6,9 +6,8 @@ import AppStoreBadgeIMG from '@assets/images/mobile/app-store-badge.png';
 import GooglePlayBadgeIMG from '@assets/images/mobile/google-play-badge.png';
 import { NewTabLink } from '@components';
 import { DOWNLOAD_MYCRYPTO_LINK, WALLETS_CONFIG } from '@config';
-import { ANALYTICS_CATEGORIES } from '@services';
 import translate from '@translations';
-import { useAnalytics, useScreenSize } from '@utils';
+import { useScreenSize } from '@utils';
 import './Web3ProviderInstall.scss';
 
 function InstallTrunk() {
@@ -73,12 +72,6 @@ function InstallMetaMask() {
 }
 
 function Web3ProviderInstall() {
-  useAnalytics({
-    category: ANALYTICS_CATEGORIES.ADD_WEB3_ACCOUNT,
-    actionName: 'No provider detected',
-    triggerOnMount: true
-  });
-
   const { isMobile } = useScreenSize();
   return (
     <div className="Panel">
