@@ -148,3 +148,4 @@ export {
 export { hexEncodeData, hexEncodeQuantity } from './hexEncode';
 export { formatApproveTx } from './erc20';
 export { randomElementFromArray } from './random';
+export { default as log } from './logger';
