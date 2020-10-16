@@ -14,7 +14,8 @@ import {
 } from '@routing';
 import { useFeatureFlags } from '@services';
 import { COLORS, SPACING } from '@theme';
-import { ScrollToTop, useScreenSize } from '@utils';
+import { ScrollToTop, useAnalytics, useScreenSize } from '@utils';
+import { useEffectOnce } from '@vendor';
 
 import { AppLoading } from './AppLoading';
 
@@ -55,32 +56,36 @@ const LayoutWithLocation = withRouter(({ location, children }) => {
 
 export const AppRoutes = () => {
   const { featureFlags } = useFeatureFlags();
+  const { initAnalytics } = useAnalytics();
+
+  useEffectOnce(() => {
+    initAnalytics();
+  });
 
   return (
     <>
       <ScrollToTop />
+      <PageVisitsAnalytics />
       <ScreenLockProvider>
         <DrawerProvider>
-          <PageVisitsAnalytics>
-            <DefaultHomeHandler>
-              <Suspense fallback={<AppLoading />}>
-                <Switch>
-                  {/* To avoid fiddling with layout we provide a complete route to home */}
-                  <LayoutWithLocation>
-                    <Switch>
-                      <Route path={ROUTE_PATHS.ROOT.path} component={Dashboard} exact={true} />
-                      {getAppRoutes(featureFlags)
-                        .filter((route) => !route.seperateLayout)
-                        .map((config, idx) => (
-                          <PrivateRoute key={idx} {...config} />
-                        ))}
-                      <Route component={PageNotFound} />
-                    </Switch>
-                  </LayoutWithLocation>
-                </Switch>
-              </Suspense>
-            </DefaultHomeHandler>
-          </PageVisitsAnalytics>
+          <DefaultHomeHandler>
+            <Suspense fallback={<AppLoading />}>
+              <Switch>
+                {/* To avoid fiddling with layout we provide a complete route to home */}
+                <LayoutWithLocation>
+                  <Switch>
+                    <Route path={ROUTE_PATHS.ROOT.path} component={Dashboard} exact={true} />
+                    {getAppRoutes(featureFlags)
+                      .filter((route) => !route.seperateLayout)
+                      .map((config, idx) => (
+                        <PrivateRoute key={idx} {...config} />
+                      ))}
+                    <Route component={PageNotFound} />
+                  </Switch>
+                </LayoutWithLocation>
+              </Switch>
+            </Suspense>
+          </DefaultHomeHandler>
           <LegacyRoutesHandler />
         </DrawerProvider>
       </ScreenLockProvider>
