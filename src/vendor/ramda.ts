@@ -47,3 +47,5 @@ export { default as union } from 'ramda/src/union';
 export { default as pick } from 'ramda/src/pick';
 export { default as assoc } from 'ramda/src/assoc';
 export { default as descend } from 'ramda/src/descend';
+export { default as whereEq } from 'ramda/src/whereEq';
+export { default as head } from 'ramda/src/head';
