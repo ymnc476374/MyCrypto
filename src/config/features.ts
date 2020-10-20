@@ -38,8 +38,5 @@ export const FEATURE_FLAGS = {
   ENS: true,
   REP_TOKEN_MIGRATION: true,
   CUSTOM_NETWORKS: IS_DEV,
-  // This features requires a landing page, same root host to be running simultaneously.
-  // While this can be expected in staging and in production we SHOULD not expect every developper
-  // to run both projects while working. Deactivate feature in dev by default.
-  MIGRATE_LS: !IS_DEV
+  ANALYTICS: !IS_DEV // Analytics requires running local server and setting a SEGEMENT_WRITE_KEY in .env
 };
