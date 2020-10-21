@@ -23,7 +23,6 @@ import {
   sortByTicker
 } from '@utils';
 
-
 const isAssetToken = (tokenType: string) => {
   return tokenType !== 'base';
 };
@@ -222,20 +221,20 @@ export function RequestAssets({ history }: RouteComponentProps) {
                     <QRCode
                       data={
                         isAssetToken(selectedAsset.type) &&
-                          selectedAsset.contractAddress &&
-                          selectedAsset.decimal
+                        selectedAsset.contractAddress &&
+                        selectedAsset.decimal
                           ? buildEIP681TokenRequest(
-                            recipientAddress.address,
-                            selectedAsset.contractAddress,
-                            network.chainId,
-                            amount,
-                            selectedAsset.decimal
-                          )
+                              recipientAddress.address,
+                              selectedAsset.contractAddress,
+                              network.chainId,
+                              amount,
+                              selectedAsset.decimal
+                            )
                           : buildEIP681EtherRequest(
-                            recipientAddress.address,
-                            network.chainId,
-                            amount
-                          )
+                              recipientAddress.address,
+                              network.chainId,
+                              amount
+                            )
                       }
                     />
                   </QRDisplay>
@@ -246,20 +245,20 @@ export function RequestAssets({ history }: RouteComponentProps) {
                     <Copyable
                       text={
                         isAssetToken(selectedAsset.type) &&
-                          selectedAsset.contractAddress &&
-                          selectedAsset.decimal
+                        selectedAsset.contractAddress &&
+                        selectedAsset.decimal
                           ? buildEIP681TokenRequest(
-                            recipientAddress.address,
-                            selectedAsset.contractAddress,
-                            network.chainId,
-                            amount,
-                            selectedAsset.decimal
-                          )
+                              recipientAddress.address,
+                              selectedAsset.contractAddress,
+                              network.chainId,
+                              amount,
+                              selectedAsset.decimal
+                            )
                           : buildEIP681EtherRequest(
-                            recipientAddress.address,
-                            network.chainId,
-                            amount
-                          )
+                              recipientAddress.address,
+                              network.chainId,
+                              amount
+                            )
                       }
                       isCopyable={true}
                     />

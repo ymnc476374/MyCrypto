@@ -239,9 +239,9 @@ export default function WalletBreakdownView({
   const label = allVisible
     ? translateRaw('WALLET_BREAKDOWN_ALL_ACCOUNTS')
     : translateRaw('WALLET_BREAKDOWN_SOME_WALLETS', {
-      $current: `${selected.length}`,
-      $total: `${accounts.length}`
-    });
+        $current: `${selected.length}`,
+        $total: `${accounts.length}`
+      });
 
   useEffect(() => {
     setShouldAnimate(true);
@@ -279,49 +279,49 @@ export default function WalletBreakdownView({
         {parseFloat(totalFiatValue) === 0 ? (
           <NoAssets />
         ) : (
-            <>
-              <BreakdownChart
-                balances={chartBalances}
-                selectedAssetIndex={selectedAssetIndex.chart}
-                handleMouseOver={handleMouseOver}
-                handleMouseLeave={handleMouseLeave}
-                setIsChartAnimating={setIsChartAnimating}
-                isChartAnimating={isChartAnimating}
-                shouldAnimate={shouldAnimate}
-                setShouldAnimate={setShouldAnimate}
-              />
-              {balance && (
-                <PanelFigures>
-                  <PanelFigure>
-                    <PanelFigureValue>
-                      <Typography bold={true} fontSize={'1.3rem'}>
-                        {balance.name}
-                      </Typography>
-                    </PanelFigureValue>
-                    <PanelFigureLabel>
-                      {selectedAssetPercentage}
-                      {translate('WALLET_BREAKDOWN_PERCENTAGE')}
-                    </PanelFigureLabel>
-                  </PanelFigure>
-                  <PanelFigure>
-                    <PanelFigureValue>
-                      <Currency
-                        amount={balance.fiatValue.toString()}
-                        symbol={fiat.symbol}
-                        ticker={fiat.ticker}
-                        decimals={2}
-                        bold={true}
-                        fontSize={'1.3rem'}
-                      />
-                    </PanelFigureValue>
-                    <PanelFigureLabel>
-                      {translate('WALLET_BREAKDOWN_VALUE_IN')} {fiat.ticker}
-                    </PanelFigureLabel>
-                  </PanelFigure>
-                </PanelFigures>
-              )}
-            </>
-          )}
+          <>
+            <BreakdownChart
+              balances={chartBalances}
+              selectedAssetIndex={selectedAssetIndex.chart}
+              handleMouseOver={handleMouseOver}
+              handleMouseLeave={handleMouseLeave}
+              setIsChartAnimating={setIsChartAnimating}
+              isChartAnimating={isChartAnimating}
+              shouldAnimate={shouldAnimate}
+              setShouldAnimate={setShouldAnimate}
+            />
+            {balance && (
+              <PanelFigures>
+                <PanelFigure>
+                  <PanelFigureValue>
+                    <Typography bold={true} fontSize={'1.3rem'}>
+                      {balance.name}
+                    </Typography>
+                  </PanelFigureValue>
+                  <PanelFigureLabel>
+                    {selectedAssetPercentage}
+                    {translate('WALLET_BREAKDOWN_PERCENTAGE')}
+                  </PanelFigureLabel>
+                </PanelFigure>
+                <PanelFigure>
+                  <PanelFigureValue>
+                    <Currency
+                      amount={balance.fiatValue.toString()}
+                      symbol={fiat.symbol}
+                      ticker={fiat.ticker}
+                      decimals={2}
+                      bold={true}
+                      fontSize={'1.3rem'}
+                    />
+                  </PanelFigureValue>
+                  <PanelFigureLabel>
+                    {translate('WALLET_BREAKDOWN_VALUE_IN')} {fiat.ticker}
+                  </PanelFigureLabel>
+                </PanelFigure>
+              </PanelFigures>
+            )}
+          </>
+        )}
         <PoweredBy>
           <PoweredByText provider="COINGECKO" />
         </PoweredBy>

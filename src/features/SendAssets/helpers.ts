@@ -165,8 +165,8 @@ export const parseTransactionQueryParams = (queryParams: any) => (
   const baseAsset = assets.find(({ uuid }) => uuid === network.baseAsset) as ExtendedAsset;
   const asset = isERC20
     ? assets.find(
-      ({ contractAddress }) => contractAddress && isSameAddress(contractAddress as TAddress, to)
-    ) || generateGenericErc20(to, i.chainId, network.id)
+        ({ contractAddress }) => contractAddress && isSameAddress(contractAddress as TAddress, to)
+      ) || generateGenericErc20(to, i.chainId, network.id)
     : baseAsset;
   return {
     from: senderAccount.address,

@@ -4,7 +4,6 @@ import { Button, Network } from '@mycrypto/ui';
 import { BigNumber, bigNumberify } from 'ethers/utils';
 import styled from 'styled-components';
 
-
 import { CopyableCodeBlock } from '@components';
 import { DEFAULT_ASSET_DECIMAL } from '@config';
 import { COLORS } from '@theme';
@@ -18,7 +17,6 @@ import {
   totalTxFeeToString,
   weiToFloat
 } from '@utils';
-
 
 import { ISender } from '../types';
 
@@ -186,10 +184,10 @@ function TransactionDetailsDisplay({
                   <CopyableCodeBlock>{data}</CopyableCodeBlock>
                 </div>
               ) : (
-                  <div className="TransactionDetails-row-data-empty">
-                    {translate('TRANS_DATA_NONE')}
-                  </div>
-                )}
+                <div className="TransactionDetails-row-data-empty">
+                  {translate('TRANS_DATA_NONE')}
+                </div>
+              )}
             </div>
             {rawTransaction && (
               <>
