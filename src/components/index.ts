@@ -93,3 +93,4 @@ export {
   TextProps
 } from './NewTypography';
 export { ActionPanel } from './ActionsPanel';
+export { Switch } from './Switch';

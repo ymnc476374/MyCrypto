@@ -1,10 +1,10 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 
 import { Button } from '@mycrypto/ui';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { DashboardPanel, SubHeading, Tooltip } from '@components';
+import { DashboardPanel, SubHeading, Switch, Tooltip } from '@components';
 import { Fiats, ROUTE_PATHS } from '@config';
 import { BREAK_POINTS, COLORS, SPACING } from '@theme';
 import translate, { translateRaw } from '@translations';
@@ -72,6 +72,12 @@ const timerOptions = [
 ];
 
 const GeneralSettings: FC<SettingsProps> = ({ globalSettings, updateGlobalSettings }) => {
+  const [isAnalyticsActive, setIsAnalyticsActive] = useState(true);
+  const toggleAnalytics = () => {
+    console.log('toggle called to ', !isAnalyticsActive);
+    setIsAnalyticsActive(!isAnalyticsActive);
+  };
+
   const changeTimer = useCallback(
     (event: React.FormEvent<HTMLSelectElement>) => {
       const target = event.target as HTMLSelectElement;
@@ -140,6 +146,21 @@ const GeneralSettings: FC<SettingsProps> = ({ globalSettings, updateGlobalSettin
               ))}
             </select>
           </SelectContainer>
+        </SettingsControl>
+      </SettingsField>
+      <SettingsField>
+        <SubHeading fontWeight="initial">
+          {translate('SETTINGS_PRODUCT_ANALYTICS')}{' '}
+          <Tooltip tooltip={<span>{translate('SETTINGS_PRODUCT_ANALYTICS_TOOLTIP')}</span>} />
+        </SubHeading>
+        <SettingsControl>
+          <Switch
+            greyable={true}
+            checked={isAnalyticsActive}
+            onChange={toggleAnalytics}
+            labelLeft="OFF"
+            labelRight="ON"
+          />
         </SettingsControl>
       </SettingsField>
     </DashboardPanel>
