@@ -8,6 +8,7 @@ export {
   socialMediaLinks,
   DOWNLOAD_MYCRYPTO_LINK,
   SUBSCRIBE_NEWSLETTER_LINK,
+  MYCRYPTO_FAUCET_LINK,
   UNISWAP_LINK
 } from './links';
 export * from './dpaths';

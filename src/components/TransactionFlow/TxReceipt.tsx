@@ -22,7 +22,7 @@ import {
   TimeElapsed,
   Tooltip
 } from '@components';
-import { getWalletConfig, ROUTE_PATHS } from '@config';
+import { getWalletConfig, MYCRYPTO_FAUCET_LINK, ROUTE_PATHS } from '@config';
 import { getFiat } from '@config/fiats';
 import ProtocolTagsList from '@features/DeFiZap/components/ProtocolTagsList';
 import { ProtectTxAbort } from '@features/ProtectTransaction/components/ProtectTxAbort';
@@ -524,8 +524,7 @@ export const TxReceiptUI = ({
         <NewTabLink
           href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
             translateRaw('FAUCET_TWEET', {
-              /* TODO: How to find base url without hardcoding? */
-              $faucet_url: 'https://app.mycrypto.com' + ROUTE_PATHS.FAUCET.path
+              $faucet_url: MYCRYPTO_FAUCET_LINK
             })
           )}`}
         >
