@@ -60,8 +60,9 @@ describe('TxReceipt', () => {
   });
 
   test('it displays the correct basic details', async () => {
-    const { getByText } = getComponent(defaultProps);
+    const { getByText, getByTestId } = getComponent(defaultProps);
     expect(getByText(truncate(defaultProps.displayTxReceipt!.hash))).toBeDefined();
+    expect(getByTestId(defaultProps.txStatus)).toBeDefined();
   });
 
   test('it displays the correct advanced details', async () => {
@@ -80,12 +81,12 @@ describe('TxReceipt', () => {
   });
 
   test('it displays pending state', async () => {
-    const { getAllByText } = getComponent({
+    const { getAllByTestId } = getComponent({
       ...defaultProps,
       txStatus: ITxStatus.PENDING,
       displayTxReceipt: undefined
     });
-    expect(getAllByText(translateRaw('PENDING'))).toBeDefined();
+    expect(getAllByTestId('PENDING')).toBeDefined();
   });
 
   // @todo: Re-add tests
