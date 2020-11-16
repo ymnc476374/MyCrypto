@@ -90,6 +90,8 @@ export default function MultiTxReceipt({
             ? network.blockExplorer.txUrl(transaction.txHash as string)
             : '';
 
+        const assetRate = getAssetRate(asset);
+
         return (
           <div key={idx}>
             <div className="TransactionReceipt-row">
@@ -127,7 +129,7 @@ export default function MultiTxReceipt({
               asset={asset}
               assetAmount={amount}
               baseAsset={baseAsset}
-              assetRate={getAssetRate(asset)}
+              assetRate={assetRate}
               baseAssetRate={baseAssetRate}
               settings={settings}
               gasPrice={gasPrice}
@@ -159,6 +161,8 @@ export default function MultiTxReceipt({
               <TransactionDetailsDisplay
                 baseAsset={baseAsset}
                 asset={asset}
+                assetAmount={amount}
+                value={value}
                 data={data}
                 sender={account}
                 gasLimit={bigNumGasLimitToViewable(bigify(gasLimit))}
@@ -167,6 +171,7 @@ export default function MultiTxReceipt({
                 rawTransaction={transaction.txRaw}
                 fiat={fiat}
                 baseAssetRate={baseAssetRate}
+                assetRate={assetRate}
                 timestamp={timestamp}
                 status={status}
                 recipient={to}
