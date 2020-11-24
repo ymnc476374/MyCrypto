@@ -32,11 +32,9 @@
     "axios": "0.18.1",
     "bignumber.js": "9.0.0",
     "bn.js": "4.11.8",
-    "bootstrap-sass": "3.3.7",
     "classnames": "2.2.5",
     "date-fns": "2.16.1",
     "ethereumjs-abi": "0.6.8",
-    "ethereumjs-tx": "2.1.1",
     "ethereumjs-util": "6.0.0",
     "ethers": "4.0.44",
     "font-awesome": "4.7.0",
@@ -81,7 +79,7 @@
     "what-input": "5.2.6",
     "whatwg-fetch": "2.0.3",
     "ws": "7.2.0",
-    "yup": "0.27.0"
+    "yup": "0.28.2"
   },
   "devDependencies": {
     "@babel/core": "7.9.0",
@@ -193,7 +191,7 @@
     "stylelint-config-styled-components": "0.1.1",
     "stylelint-processor-styled-components": "1.10.0",
     "stylelint-webpack-plugin": "1.2.3",
-    "testcafe": "1.8.5",
+    "testcafe": "1.9.4",
     "tsconfig-paths-webpack-plugin": "3.2.0",
     "typescript": "4.0.2",
     "utility-types": "3.10.0",

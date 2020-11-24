@@ -100,6 +100,10 @@ const AntTokenMigration = lazy(() =>
 );
 const Faucet = lazy(() => import(/* webpackChunkName: "Faucet" */ '@features/Faucet'));
 
+const GolemTokenMigration = lazy(() =>
+  import(/* webpackChunkName: "TokenMigration" */ '@features/GolemTokenMigration')
+);
+
 export interface IAppRoutes {
   [K: string]: IAppRoute;
 }
@@ -356,6 +360,15 @@ export const getStaticAppRoutes = (featureFlags: IFeatureFlags): IAppRoute[] => 
     requireAccounts: true,
     enabled: isTruthy(featureFlags.FAUCET),
     component: Faucet
+  },
+  {
+    name: ROUTE_PATHS.GOLEM_TOKEN_MIGRATION.name,
+    title: ROUTE_PATHS.GOLEM_TOKEN_MIGRATION.title,
+    path: ROUTE_PATHS.GOLEM_TOKEN_MIGRATION.path,
+    exact: true,
+    requireAccounts: true,
+    enabled: isTruthy(featureFlags.GOLEM_TOKEN_MIGRATION),
+    component: GolemTokenMigration
   }
 ];
 

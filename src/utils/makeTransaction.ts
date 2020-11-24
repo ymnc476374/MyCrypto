@@ -1,34 +1,18 @@
 import BigNumber from 'bignumber.js';
-import { Transaction as Tx } from 'ethereumjs-tx';
 import { addHexPrefix, stripHexPrefix } from 'ethereumjs-util';
-import { bigNumberify, formatEther } from 'ethers/utils';
+import { bigNumberify, formatEther, UnsignedTransaction } from 'ethers/utils';
 
 import { DEFAULT_ASSET_DECIMAL } from '@config';
-import {
-  IHexStrTransaction,
-  ITransaction,
-  ITxGasLimit,
-  ITxGasPrice,
-  ITxNonce,
-  ITxValue
-} from '@types';
-import { prop } from '@vendor';
+import { ITxGasLimit, ITxGasPrice, ITxNonce, ITxObject, ITxValue } from '@types';
 
 import { bigify } from './bigify';
 import { hexEncodeQuantity } from './hexEncode';
 import { fromWei, gasPriceToBase, toTokenBase, toWei, Wei } from './units';
 
-const hasChainId = (t: any): t is Partial<ITransaction> | Partial<IHexStrTransaction> =>
-  !!prop('chainId', t);
-
-export const makeTransaction = (
-  t: Partial<Tx> | Partial<ITransaction> | Partial<IHexStrTransaction> | Buffer | string
-) => {
-  if (hasChainId(t)) {
-    return new Tx(t, { chain: t.chainId });
-  } else {
-    return new Tx(t);
-  }
+export const makeTransaction = (t: ITxObject): UnsignedTransaction => {
+  // Hardware wallets need `from` param excluded
+  const { from, ...tx } = t;
+  return { ...tx, nonce: new BigNumber(t.nonce, 10).toNumber() };
 };
 
 /* region:start User Input to Hex */

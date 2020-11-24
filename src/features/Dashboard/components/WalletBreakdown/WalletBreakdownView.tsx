@@ -3,8 +3,7 @@ import React, { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js';
 import styled, { css } from 'styled-components';
 
-import moreIcon from '@assets/images/icn-more.svg';
-import { AssetIcon, Currency, PoweredByText, Tooltip, Typography } from '@components';
+import { AssetIcon, Currency, Icon, PoweredByText, Tooltip, Typography } from '@components';
 import { EMPTYUUID } from '@config';
 import { BREAK_POINTS, COLORS, FONT_SIZE, SPACING } from '@theme';
 import translate, { translateRaw } from '@translations';
@@ -132,7 +131,7 @@ const BreakDownHeadingWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const BreakDownMore = styled.img`
+const BreakDownMore = styled(Icon)`
   cursor: pointer;
   display: block;
 `;
@@ -331,7 +330,7 @@ export default function WalletBreakdownView({
       <BreakDownBalances>
         <BreakDownHeadingWrapper>
           <BreakDownHeading>{translate('WALLET_BREAKDOWN_BALANCES')}</BreakDownHeading>
-          <BreakDownMore src={moreIcon} alt="More" onClick={toggleShowChart} />
+          <BreakDownMore type="more" height="24px" alt="More" onClick={toggleShowChart} />
         </BreakDownHeadingWrapper>
         <BreakDownBalanceList>
           {breakdownBalances.map(

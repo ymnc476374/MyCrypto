@@ -2,7 +2,6 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import moreIcon from '@assets/images/icn-more.svg';
 import approval from '@assets/images/transactions/approval.svg';
 import contractDeploy from '@assets/images/transactions/contract-deploy.svg';
 import contractInteract from '@assets/images/transactions/contract-interact.svg';
@@ -20,6 +19,7 @@ import {
   DashboardPanel,
   EditableAccountLabel,
   FixedSizeCollapsibleTable,
+  Icon,
   RouterLink
 } from '@components';
 import { ROUTE_PATHS } from '@config';
@@ -82,6 +82,10 @@ const TxTypeConfig: ITxTypeConfig = {
   },
   [ITxHistoryType.ANT_TOKEN_MIGRATION]: {
     label: () => translateRaw('RECENT_TX_LIST_LABEL_ANT_MIGRATION'),
+    icon: transfer
+  },
+  [ITxHistoryType.GOLEM_TOKEN_MIGRATION]: {
+    label: () => translateRaw('RECENT_TX_LIST_LABEL_GOLEM_MIGRATION'),
     icon: transfer
   },
   [ITxHistoryType.DEFIZAP]: {
@@ -234,7 +238,7 @@ export default function RecentTransactionList({ accountsList, className = '' }: 
             key={4}
             to={`${ROUTE_PATHS.TX_STATUS.path}/?hash=${hash}&network=${networkId}`}
           >
-            <img src={moreIcon} alt="View more information about this transaction" />
+            <Icon type="more" alt="View more information about this transaction" height="24px" />
           </RouterLink>
         ];
       }
