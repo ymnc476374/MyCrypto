@@ -3,7 +3,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { DashboardPanel } from '@components';
-import Layout from '@features/Layout/Layout';
 import { BREAK_POINTS, COLORS, FONT_SIZE, LINE_HEIGHT, SPACING } from '@theme/constants';
 import { translateRaw } from '@translations';
 
@@ -47,14 +46,12 @@ const LoadingSubText = styled.h6`
   text-align: center;
 `;
 
-export const AppLoading = () => {
-  return (
-    <Layout>
-      <DashboardPanelLoading>
-        <Loader className="loading" />
-        <LoadingText>{translateRaw('APP_LOADING')}</LoadingText>
-        <LoadingSubText>{translateRaw('APP_LOADING_SUBHEADER')}</LoadingSubText>
-      </DashboardPanelLoading>
-    </Layout>
-  );
-};
+const AppLoading = () => (
+  <DashboardPanelLoading>
+    <Loader className="loading" />
+    <LoadingText>{translateRaw('APP_LOADING')}</LoadingText>
+    <LoadingSubText>{translateRaw('APP_LOADING_SUBHEADER')}</LoadingSubText>
+  </DashboardPanelLoading>
+);
+
+export default AppLoading;
